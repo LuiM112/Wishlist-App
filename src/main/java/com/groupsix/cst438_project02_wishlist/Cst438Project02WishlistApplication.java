@@ -39,6 +39,11 @@ public class Cst438Project02WishlistApplication {
         return "landing_page";
     }
 
+    @RequestMapping(value = "/home")
+    String homepage() {
+        return "/home";
+    }
+
 
     public static void main(String[] args) {
         SpringApplication.run(Cst438Project02WishlistApplication.class, args);
