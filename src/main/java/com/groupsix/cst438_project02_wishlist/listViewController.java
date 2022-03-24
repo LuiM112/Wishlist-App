@@ -9,10 +9,7 @@ import com.groupsix.cst438_project02_wishlist.repositories.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,21 +34,32 @@ public class listViewController {
     }
 
     @RequestMapping(value = "/addItem")
-    public @ResponseBody
-    String addItem (@RequestParam String itemUrl,
-                    @RequestParam String itemImgUrl,
-                    @RequestParam String itemName,
-                    @RequestParam String itemDetails){
+    String getAddItem(HttpServletResponse response, HttpServletRequest request,HttpSession session, Model model) throws IOException {
+
+        return "add_item";
+    }
+
+    @RequestMapping(value = "/addItem", method = RequestMethod.POST)
+    String addItem (HttpServletResponse response,
+                           HttpServletRequest request,
+                           Model model,
+                           @RequestParam String itemName,
+                           @RequestParam String itemDetails) throws IOException{
+        User user = ((User) request.getSession().getAttribute("User_Session"));
         Item item = new Item();
 
-        item.setItemUrl(itemUrl);
-        item.setItemImgUrl(itemImgUrl);
-        item.setItemName(itemName);
-        item.setItemDetails(itemDetails);
+        if(!itemName.isEmpty()){
+            item.setItemName(itemName);
+            item.setWishlistId(user.getUserId());
+            item.setItemDetails(itemDetails);
+            itemRepository.save(item);
+            response.sendRedirect("/edit_wishlist");
+        }
+        else{
+            model.addAttribute("Error_Msg", "Can't leave the Item Name blank");
+        }
 
-        itemRepository.save(item);
-
-        return "edit_wishlist";
+        return "add_item";
 
     }
 }

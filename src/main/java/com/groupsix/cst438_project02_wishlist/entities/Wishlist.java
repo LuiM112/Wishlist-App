@@ -12,6 +12,7 @@ public class Wishlist {
     private Integer userId;
     private String listName;
 
+
     public Integer getWishlistId() {
         return wishlistId;
     }

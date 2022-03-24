@@ -153,6 +153,11 @@ public class Api {
         return "Created a wishlist";
     }
 
+    @GetMapping(path = "/addItem")
+    public @ResponseBody Item getAddedItem (@RequestParam Integer wishlistId) {
+        return (Item) itemRepository.findItemById(wishlistId);
+    }
+
 
     @PostMapping(path = "/addItem")
     public @ResponseBody String addItem (@RequestParam String itemUrl,
