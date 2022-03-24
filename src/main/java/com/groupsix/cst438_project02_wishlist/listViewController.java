@@ -34,7 +34,7 @@ public class listViewController {
     String view_item_list(HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
         HttpSession session = request.getSession(false);
         User user = ((User) request.getSession().getAttribute("User_Session"));
-        Wishlist wishlist = wishlistRepository.findWishlistById(user.getUserId());
+        Wishlist wishlist = (Wishlist) wishlistRepository.findUserbyId(user.getUserId());
         Item item = itemRepository.findItemById(wishlist.getWishlistId());
 
         model.addAttribute("item_list",item.getItemName());

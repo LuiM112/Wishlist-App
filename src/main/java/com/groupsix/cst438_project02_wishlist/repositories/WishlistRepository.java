@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface WishlistRepository extends CrudRepository<Wishlist, Integer> {
-    @Query(value = "SELECT * FROM User u WHERE w.user_id like %:user_id%",
-            countQuery = "Select count(*) from User", nativeQuery = true)
+import java.util.List;
 
-    Wishlist findWishlistById(@Param("user_id") Integer user_id);
+public interface WishlistRepository extends CrudRepository<Wishlist, Integer> {
+    List<Wishlist> findUserbyId(Integer userId);
 
 
 
 }
+
+

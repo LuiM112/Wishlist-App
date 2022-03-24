@@ -139,7 +139,7 @@ public class Api {
 
     @GetMapping(path = "/findWishlistById")
     public @ResponseBody Wishlist getWishlist (@RequestParam Integer userId) {
-        return wishlistRepository.findWishlistById(userId);
+        return (Wishlist) wishlistRepository.findUserbyId(userId);
 
     }
 
